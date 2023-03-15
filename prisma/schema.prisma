@@ -67,7 +67,7 @@ model VerificationToken {
 
 model Article {
   id        Int     @id @default(autoincrement())
-  tittle    String
+  title    String
   content   String
   users     User[]
 
