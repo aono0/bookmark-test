@@ -10,3 +10,6 @@ index.tsx
 prisma.ts
 pages
 components
+data
+prisma
+types

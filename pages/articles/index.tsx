@@ -16,7 +16,7 @@ const Articles = (props: Props) => {
             <div
               key={article.id}
               className='w-full cursor-pointer px-2 lg:w-4/12'
-              onClick={() => Router.push('/articles/${article.id}')}
+              onClick={() => Router.push(`/articles/${article.id}`)}
             >
               <div className='relative mt-4 flex flex-col'>
                 <div className='flex-auto px-4 py-5'>
