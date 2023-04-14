@@ -3,11 +3,29 @@ import { getSession } from 'next-auth/react';
 import prisma from '../../lib/prisma';
 import { ArticleProps } from '../../types/Article';
 import { User } from '../../types/User';
+import Router from 'next/router';
 
 type Props = {
   article: ArticleProps;
   isBookmarked: boolean;
 };
+
+async function addBookmark(id: number): Promise<void> {
+  await fetch(process.env.NEXT_PUBLIC_VERCEL_URL + `/api/bookmark/add/${id}`, {
+    method: 'PUT',
+  });
+  Router.push(`/articles/${id}`);
+}
+
+async function removeBookmark(id: number): Promise<void> {
+  await fetch(
+    process.env.NEXT_PUBLIC_VERCEL_URL + `/api/bookmark/remove/${id}`,
+    {
+      method: 'PUT',
+    }
+  );
+  Router.push(`/articles/${id}`);
+}
 
 const Article = (props: Props) => {
   return (
@@ -21,6 +39,7 @@ const Article = (props: Props) => {
           </p>
           {props.isBookmarked ? (
             <button
+              onClick={() => removeBookmark(props.article.id)}
               type='button'
               className='mt-5 inline-flex items-center rounded-lg bg-red-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800'
             >
@@ -31,6 +50,7 @@ const Article = (props: Props) => {
             </button>
           ) : (
             <button
+              onClick={() => addBookmark(props.article.id)}
               type='button'
               className='mt-5 inline-flex items-center rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
             >
